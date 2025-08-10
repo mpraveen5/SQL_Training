@@ -69,7 +69,6 @@ select ticket_id,customer_name,
 |        19 | Sam           | High    |
 |        20 | Tina          | Medium  |
 +-----------+---------------+---------+
-________________________________________
 
 ✅ 2. Add a column to classify ticket status
 •	'Active' if status = 'Open' or 'Escalated'
@@ -104,7 +103,7 @@ select *,case
 |        19 | Sam           | Network    |        3 | Open      | 2025-08-07   | Network Team  | Boston        | Active         |
 |        20 | Tina          | Hardware   |        2 | Escalated | 2025-08-02   | Hardware Team | Seattle       | Active         |
 +-----------+---------------+------------+----------+-----------+--------------+---------------+---------------+----------------+
-________________________________________
+
 ✅ 3. List tickets and show issue category
 •	'Software Issue', 'Hardware Issue', 'Network Issue', or 'Other'
 select *,case issue_type
@@ -138,7 +137,7 @@ select *,case issue_type
 |        19 | Sam           | Network    |        3 | Open      | 2025-08-07   | Network Team  | Boston        | Network Issue  |
 |        20 | Tina          | Hardware   |        2 | Escalated | 2025-08-02   | Hardware Team | Seattle       | Hardware Issue |
 +-----------+---------------+------------+----------+-----------+--------------+---------------+---------------+----------------+
-________________________________________
+
 ✅ 4. Mark tickets as "VIP" if customer name starts with A, E, M, or S
 	select customer_name, case
 when customer_name like 'a%' 
@@ -173,7 +172,7 @@ from tickets;
 | Sam           | VIP        |
 | Tina          | Other      |
 +---------------+------------+
-________________________________________
+
 ✅ 5. Show ticket summary: "High Priority Open", "Low Priority Closed", or "Other"
 select ticket_id, customer_name, case
     -> when priority=3 and status='open' then 'High Priority Open'
@@ -204,7 +203,7 @@ select ticket_id, customer_name, case
 |        19 | Sam           | High Priority Open  |
 |        20 | Tina          | Other               |
 +-----------+---------------+---------------------+
-________________________________________
+
 ✅ 6. Mark follow-up required if ticket is pending or priority is high
 select ticket_id, customer_name,priority,status, case
     -> when priority=3 or status='pending' then 'Required'
@@ -234,7 +233,7 @@ select ticket_id, customer_name,priority,status, case
 |        19 | Sam           |        3 | Open      | Required     |
 |        20 | Tina          |        2 | Escalated | Not Required |
 +-----------+---------------+----------+-----------+--------------+
-________________________________________
+
 ✅ 7. Assign handling group based on issue_type
 select ticket_id,customer_name,Issue_type,case issue_type
     -> when 'Network' then 'Network Dept'
@@ -266,7 +265,7 @@ select ticket_id,customer_name,Issue_type,case issue_type
 |        18 | Rita          | Software   | Software Dept  |
 |        19 | Sam           | Network    | Network Dept   |
 |        20 | Tina          | Hardware   | Hardware Dept  |
-+-----------+---------------+------------+----------------+________________________________________
++-----------+---------------+------------+----------------+
 
 ✅ 8. Label cities as "HQ" if in New York or Chicago
 select *,
@@ -298,7 +297,7 @@ select *,
 |        19 | Sam           | Network    |        3 | Open      | 2025-08-07   | Network Team  | Boston        | NO    |
 |        20 | Tina          | Hardware   |        2 | Escalated | 2025-08-02   | Hardware Team | Seattle       | NO    |
 +-----------+---------------+------------+----------+-----------+--------------+---------------+---------------+-------+
-________________________________________
+
 ✅ 9. Sort tickets so 'Escalated' come first, then 'Open', then others
 select * from tickets order by case status
     -> when 'Escalated' then 1
@@ -328,7 +327,7 @@ select * from tickets order by case status
 |        15 | Oscar         | Software   |        3 | Pending   | 2025-08-01   | Software Team | Los Angeles   |
 |        17 | Queen         | Hardware   |        1 | Pending   | 2025-08-05   | Hardware Team | New York      |
 +-----------+---------------+------------+----------+-----------+--------------+---------------+---------------+
-________________________________________
+
 ✅ 10. Update status to 'Urgent' if priority = 3 and status is 'Open'
 update tickets set status = 'urgent' where priority=3 and status='open';
 select * from tickets;
@@ -356,7 +355,7 @@ select * from tickets;
 |        19 | Sam           | Network    |        3 | urgent    | 2025-08-07   | Network Team  | Boston        |
 |        20 | Tina          | Hardware   |        2 | Escalated | 2025-08-02   | Hardware Team | Seattle       |
 +-----------+---------------+------------+----------+-----------+--------------+---------------+---------------+
-________________________________________
+
 ✅ 11. Show how many tickets fall into each priority label
 select Priority, count(ticket_id) as Ticket_Count from tickets group by priority;
 +----------+--------------+
@@ -366,7 +365,7 @@ select Priority, count(ticket_id) as Ticket_Count from tickets group by priority
 |        2 |            8 |
 |        1 |            5 |
 +----------+--------------+
-________________________________________
+
 ✅ 12. Show a response plan:
 •	Immediate (High + Open)
 •	Scheduled (Medium + Pending)
@@ -403,7 +402,7 @@ select ticket_id,customer_name,case
 |        19 | Sam           | Immediate     |
 |        20 | Tina          | Standard      |
 +-----------+---------------+---------------+
-________________________________________
+
 ✅ 13. Show ticket age category
 •	If created_date is today → 'New'
 •	If more than 7 days ago → 'Old'
@@ -439,7 +438,7 @@ SELECT ticket_id,
 |        19 | 2025-08-07   | Recent       |
 |        20 | 2025-08-02   | Recent       |
 +-----------+--------------+--------------+
-________________________________________
+
 ✅ 14. Count tickets by assigned team type: Software, Hardware, Network
 select assigned_team,count(*) from tickets group by assigned_team;
 +---------------+----------+
@@ -449,7 +448,7 @@ select assigned_team,count(*) from tickets group by assigned_team;
 | Software Team |        7 |
 | Hardware Team |        6 |
 +---------------+----------+
-________________________________________
+
 ✅ 15. Create a column with nested CASE:
 •	If Open:
 o	High → 'Critical Open'
@@ -487,7 +486,7 @@ select *, case
 |        19 | Sam           | Network    |        3 | urgent    | 2025-08-07   | Network Team  | Boston        | Not Open       |
 |        20 | Tina          | Hardware   |        2 | Escalated | 2025-08-02   | Hardware Team | Seattle       | Not Open       |
 +-----------+---------------+------------+----------+-----------+--------------+---------------+---------------+----------------+
-________________________________________
+
 ✅ 16. Count number of Open vs. Closed vs. Other tickets
 select case
     -> when status = 'open' then 'open'
@@ -507,7 +506,7 @@ select case
 | closed |     5 |
 | other  |    12 |
 +--------+-------+
-________________________________________
+
 ✅ 17. List all tickets and show "Assigned Team Type"
 •	If team contains "Software" → 'SW'
 •	If team contains "Hardware" → 'HW'
@@ -542,7 +541,7 @@ select ticket_id, customer_name, case
 |        19 | Sam           | NW            |
 |        20 | Tina          | HW            |
 +-----------+---------------+---------------+
-________________________________________
+
 ✅ 18. Get average priority per issue type
 select issue_type, avg(priority) from tickets group by issue_type;
 +------------+---------------+
@@ -552,10 +551,10 @@ select issue_type, avg(priority) from tickets group by issue_type;
 | Software   |        2.2857 |
 | Hardware   |        1.6667 |
 +------------+---------------+
-________________________________________
+
 ✅ 19. Show only 'Software' tickets with extra labels: 'High Risk', 'Normal', etc.
 	
-________________________________________
+
 ✅ 20. Display ticket_id, issue_type, and a comment:
 •	'Needs Attention' if Escalated or Pending
 •	'Resolved' if Closed
@@ -597,5 +596,5 @@ mysql> select ticket_id, issue_type, case
 |        19 | Network    | In Progress     |
 |        20 | Hardware   | Needs Attention |
 +-----------+------------+-----------------+
-________________________________________
+
 
